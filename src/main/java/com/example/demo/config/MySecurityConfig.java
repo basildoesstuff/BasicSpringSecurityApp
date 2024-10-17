@@ -18,7 +18,7 @@ public class MySecurityConfig {
     // after 3.2.x http.httpBasic() passes an argument of type of authentication used
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.httpBasic();
+        http.formLogin();
         http.authorizeHttpRequests().anyRequest().authenticated();
         return http.build();
     }
@@ -28,14 +28,14 @@ public class MySecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    UserDetailsService userDetailsService()
-    {
-        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
-        UserDetails user = User.withUsername("tom").password(passwordEncoder().encode("helloworld"))
-                .authorities("read").build();
-        userDetailsService.createUser(user);
-        return userDetailsService ;
-    }
+//    @Bean
+//    UserDetailsService userDetailsService()
+//    {
+//        InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
+//        UserDetails user = User.withUsername("tom").password(passwordEncoder().encode("helloworld"))
+//                .authorities("read").build();
+//        userDetailsService.createUser(user);
+//        return userDetailsService ;
+//    }
 
 }
