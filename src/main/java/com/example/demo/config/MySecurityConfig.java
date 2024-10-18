@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 public class MySecurityConfig {
@@ -18,8 +19,9 @@ public class MySecurityConfig {
     // after 3.2.x http.httpBasic() passes an argument of type of authentication used
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.formLogin();
+        http.httpBasic();
         http.authorizeHttpRequests().anyRequest().authenticated();
+        http.addFilterBefore(new MySecurityFilter(), BasicAuthenticationFilter.class);
         return http.build();
     }
 
